@@ -37,6 +37,13 @@
             <div>状態: {{ $item->condition->name }}</div>
         </div>
     @endforeach
+
+    @if(Auth::check())
+        <form action="/logout" method="POST">
+            @csrf
+            <button type="submit">ログアウト</button>
+        </form>
+    @endif
 </body>
 
 </html>
