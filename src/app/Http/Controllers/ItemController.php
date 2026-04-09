@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Like;
+use App\Models\Comment;
 
 class ItemController extends Controller
 {
@@ -46,12 +47,8 @@ class ItemController extends Controller
     public function show($id)
     {
         // 商品の詳細を取得してビューに渡す
-        $item = Item::with(['user', 'condition', 'categories', 'likes'])->findOrFail($id);
+        $item = Item::with(['user', 'condition', 'categories', 'likes', 'comments.user'])->findOrFail($id);
 
-        $isLiked = false;
-        if (auth()->check()) {
-            $isLiked = $item->likes->contains('user_id', auth()->id());
-        }
-        return view('show', compact('item', 'isLiked'));
+        return view('show', compact('item'));
     }
 }

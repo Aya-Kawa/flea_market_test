@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,4 +21,6 @@ Route::get('/', [ItemController::class, 'index'])->name('items.index');
 
 Route::get('/item/{id}', [ItemController::class, 'show'])->name('items.show');
 
-Route::post('/item/{item_id}/like', [LikeController::class, 'store'])->name('items.like')->middleware('auth');
+Route::post('/item/{item_id}/like', [LikeController::class, 'store'])->middleware('auth')->name('likes.store');
+
+Route::post('/item/{item_id}/comments', [CommentController::class, 'store'])->middleware('auth')->name('comments.store');

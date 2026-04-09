@@ -9,7 +9,7 @@
 
 <body>
     <header>
-        <a href="/">Coathtech</a>
+        <a href="/">Coachtech</a>
     </header>
 
     <main>

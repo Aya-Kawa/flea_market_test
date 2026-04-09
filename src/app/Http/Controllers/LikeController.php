@@ -13,9 +13,9 @@ class LikeController extends Controller
 
     public function store($item_id)
     {
-        $user = auth()->user();
+        $userId = auth()->id();
 
-        $like = Like::where('user_id', $user->id)->where('item_id', $item_id)->first();
+        $like = Like::where('user_id', $userId)->where('item_id', $item_id)->first();
 
         if ($like) {
             // すでにいいねされている場合は削除
@@ -23,7 +23,7 @@ class LikeController extends Controller
         } else {
             // いいねを保存
             Like::create([
-                'user_id' => $user->id,
+                'user_id' => $userId,
                 'item_id' => $item_id,
             ]);
 
