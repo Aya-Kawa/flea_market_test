@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Like;
 use App\Models\Comment;
+use App\Models\Purchase;
 
 class ItemController extends Controller
 {
@@ -18,8 +19,7 @@ class ItemController extends Controller
         $tab = $request->query('tab', 'recommend');
         $keyword = $request->query('keyword');
 
-        $query = Item::with('user', 'condition', 'likes');
-
+        $query = Item::with('user', 'condition', 'likes', 'purchases');
         //商品の部分一致検索
         if (!empty($keyword)) {
             $query->where('name', 'like', "%{$keyword}%");
