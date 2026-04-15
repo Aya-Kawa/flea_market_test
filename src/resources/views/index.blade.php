@@ -31,6 +31,9 @@
             <a href="/item/{{ $item->id }}">
                 <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->name }}">
             </a>
+            @if($item->purchases)
+                <span class="sold">SOLD</span>
+            @endif
             <div>商品名: {{ $item->name }}</div>
             <div>価格: {{ $item->price }}円</div>
             <div>出品者: {{ $item->user->name }}</div>

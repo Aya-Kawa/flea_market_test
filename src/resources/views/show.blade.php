@@ -22,6 +22,11 @@
     <p>いいね数: {{ $item->likes->count() }}</p>
     <div>ブランド名: {{ $item->brand_name }}</div>
     <div>¥{{ number_format($item->price) }}</div>
+    @auth
+        <a href="{{ route('purchase.create', ['item' => $item->id]) }}" class="purchase-btn">ここで購入する</a>
+    @else
+        <a href="{{ route('login') }}" class="purchase-btn">購入するにはログインしてください</a>
+    @endauth
     <h2>商品説明</h2>
     <p>{{ $item->description }}</p>
     <h2>商品の情報</h2>
