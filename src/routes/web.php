@@ -51,5 +51,8 @@ Route::middleware('auth')->group(function () {
         ->name('purchase.cancel');
 });
 
-// Stripe webhook endpoint (no CSRF)
-Route::post('stripe/webhook', [App\Http\Controllers\StripeWebhookController::class, '__invoke']);
+Route::middleware('auth')->group(function () {
+    Route::get('/mypage', [App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/mypage/edit', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/mypage/update', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+});
