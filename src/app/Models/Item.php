@@ -20,6 +20,7 @@ class Item extends Model
         'price',
         'image_path',
         'is_sold',
+        'brand_name',
     ];
 
     public function user()

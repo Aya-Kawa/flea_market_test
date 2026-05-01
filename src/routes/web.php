@@ -56,3 +56,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/mypage/edit', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/mypage/update', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/sell', [App\Http\Controllers\SellController::class, 'create'])->name('sell.create');
+    Route::post('/sell', [App\Http\Controllers\SellController::class, 'store'])->name('sell.store');
+});
