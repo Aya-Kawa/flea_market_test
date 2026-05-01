@@ -1,0 +1,68 @@
+@extends('layouts.app')
+@section('content')
+    <div class="sell">
+        <h1 class="sell__title">商品の出品</h1>
+        <form action="{{ route('sell.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="sell__section">
+                <label class="sell__label">商品画像</label>
+                <input type="file" name="image">
+                @foreach ($errors->get('image') as $message)
+                    <p class="sell__error">{{ $message }}</p>
+                @endforeach
+            </div>
+            <div class="sell__section">
+                <h2 class="sell__heading">商品の詳細</h2>
+                <label class="sell__label">カテゴリー</label>
+                <div class="sell__categories">
+                    @foreach ($categories as $category)
+                        <label>
+                            <input type="checkbox" name="categories[]" value="{{ $category->id }}" {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}>
+                            {{ $category->name }}
+                        </label>
+                    @endforeach
+                </div>
+                @foreach ($errors->get('categories') as $message)
+                    <p class="sell__error">{{ $message }}</p>
+                @endforeach
+                <label class="sell__label">商品の状態</label>
+                <select name="condition_id">
+                    <option value="">選択してください</option>
+                    @foreach ($conditions as $condition)
+                        <option value="{{ $condition->id }}" {{ old('condition_id') == $condition->id ? 'selected' : '' }}>
+                            {{ $condition->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @foreach ($errors->get('condition_id') as $message)
+                    <p class="sell__error">{{ $message }}</p>
+                @endforeach
+
+            </div>
+            <div class="sell__section">
+                <h2 class="sell__heading">商品名と説明</h2>
+                <label class="sell__label">商品名</label>
+                <input type="text" name="name" value="{{ old('name') }}">
+                @foreach ($errors->get('name') as $message)
+                    <p class="sell__error">{{ $message }}</p>
+                @endforeach
+                <label class="sell__label">ブランド名</label>
+                <input type="text" name="brand_name" value="{{ old('brand_name') }}">
+                @foreach ($errors->get('brand_name') as $message)
+                    <p class="sell__error">{{ $message }}</p>
+                @endforeach
+                <label class="sell__label">商品の説明</label>
+                <textarea name="description">{{ old('description') }}</textarea>
+                @foreach ($errors->get('description') as $message)
+                    <p class="sell__error">{{ $message }}</p>
+                @endforeach
+                <label class="sell__label">販売価格</label>
+                <input type="number" name="price" value="{{ old('price') }}">
+                @foreach ($errors->get('price') as $message)
+                    <p class="sell__error">{{ $message }}</p>
+                @endforeach
+            </div>
+            <button type="submit">出品する</button>
+        </form>
+    </div>
+@endsection
