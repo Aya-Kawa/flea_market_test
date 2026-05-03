@@ -2,28 +2,39 @@
 
 @section('title', 'ログイン')
 
+@section('css')
+<link rel="stylesheet" href="{{asset('css/auth.css')}}">
+@endsection
+
 @section('content')
-    <h1>ログイン</h1>
+<div class="auth">
+  <div class="auth__inner">
+    <h1 class="auth__title">ログイン</h1>
 
     <form action="/login" method="POST" novalidate>
         @csrf
-        <div>
-            <label>メールアドレス</label>
-            <input type="email" name="email" value="{{ old('email') }}">
+        <div class="form__group">
+            <label class="form__label">メールアドレス</label>
+            <input class="form__input" type="email" name="email" value="{{ old('email') }}">
             @foreach($errors->get('email') as $message)
-                <p>{{ $message }}</p>
+                <p class="form__error">{{ $message }}</p>
             @endforeach
         </div>
 
-        <div>
-            <label>パスワード</label>
-            <input type="password" name="password">
+        <div class="form__group">
+            <label class="form__label">パスワード</label>
+            <input class="form__input "type="password" name="password">
             @foreach($errors->get('password') as $message)
-                <p>{{ $message }}</p>
+                <p class="form__error">{{ $message }}</p>
             @endforeach
         </div>
 
-        <button type="submit">ログイン</button>
+        <button class="form__button "type="submit">ログイン</button>
     </form>
+
+    <div class="auth__link">
     <p><a href="/register">会員登録はこちら</a></p>
+    </div>
+ </div>
+<div>
 @endsection
