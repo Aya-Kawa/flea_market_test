@@ -26,7 +26,7 @@ class ProfileController extends Controller
             $validated['profile_image'] = $path;
         }
         $user->update($validated);
-        return redirect()->route('profile.show')->with('message', 'プロフィールを更新しました');
+        return redirect('/');
     }
 }
 
