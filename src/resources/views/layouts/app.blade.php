@@ -19,6 +19,10 @@
                 @if(!request()->routeIs('verification.notice'))
                 <form action="{{ route('items.index') }}" class="header__search" method="GET">
                     <input type="text" name="keyword" value="{{ $keyword ?? '' }}" placeholder="何をお探しですか?">
+
+                    @if(request('tab') === 'mylist')
+                     <input type="hidden" name="tab" value="mylist">
+                    @endif
                 </form>
 
                 <nav class="header__nav">

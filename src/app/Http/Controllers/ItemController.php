@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
-use App\Models\Like;
-use App\Models\Comment;
-use App\Models\Purchase;
+
 
 class ItemController extends Controller
 {
