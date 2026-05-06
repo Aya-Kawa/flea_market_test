@@ -1,1 +1,2 @@
-/docker/mysql/datasrc/.env.testing
+docker/mysql/data
+src/.env.testing
