@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/mypage', [App\Http\Controllers\ProfileController::class, 'show'])->name('mypage');
-    Route::get('/mypage/edit', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/mypage/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/mypage/update', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 });
 
