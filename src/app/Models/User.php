@@ -10,7 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Item;
 use App\Models\Like;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -23,6 +24,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'postal_code',
+        'address',
+        'building',
+        'profile_image',
     ];
 
     /**
@@ -57,5 +62,10 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
     }
 }

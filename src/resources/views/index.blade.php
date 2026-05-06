@@ -1,42 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+@section('title', '商品一覧')
 
-<body>
-    <form action="{{ route('items.index') }}" method="GET">
-        <input type="text" name="keyword" value="{{ $keyword ?? '' }}" placeholder="何をお探しですか">
-        @if($tab === 'mylist'){
-            <input type="hidden" name="tab" value="mylist">
-        @endif
-        <button type="submit">検索</button>
-        }
-    </form>
+@section('css')
+<link rel="stylesheet" href="{{asset('css/index.css')}}">
+@endsection
 
-    <div>
-        <a href="{{ route('items.index', ['keyword' => $keyword]) }}">おすすめ</a>
-        <a href="{{ route('items.index', ['tab' => 'mylist', 'keyword' => $keyword]) }}">マイリスト</a>
+@section('content')
+<div class="items">
+   <div class="items__tabs">       
+        <a href="{{ route('items.index', ['keyword' => $keyword]) }}" class="items__tab {{$tab !=='mylist' ? 'items__tab--active':''}}">おすすめ</a>
+        <a href="{{ route('items.index', ['tab' => 'mylist', 'keyword' => $keyword]) }}" class="items__tab {{$tab ==='mylist' ? 'items__tab--active':''}}">マイリスト</a>
     </div>
 
-    <h1>
-        {{ $tab === 'mylist' ? 'マイリスト' : '商品一覧' }}
-    </h1>
-
+<div class="items__list">
     @foreach ($items as $item)
-        <div>
-            <a href="/item/{{ $item->id }}">
-                <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->name }}">
-            </a>
-            <div>商品名: {{ $item->name }}</div>
-            <div>価格: {{ $item->price }}円</div>
-            <div>出品者: {{ $item->user->name }}</div>
-            <div>状態: {{ $item->condition->name }}</div>
+    <div class="item-card">
+    <a href="/item/{{ $item->id }}" class="item-card__link">
+        <div class="item-card__image">
+                <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->name }}" >
+                @if($item->purchases)
+                <span class="item-card__sold">SOLD</span>
+                @endif
         </div>
+    </a>
+            
+            <div class="item-card__name">商品名: {{ $item->name }}</div>
+    </div>
     @endforeach
-</body>
-
-</html>
+</div>
+    
+@endsection

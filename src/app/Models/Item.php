@@ -20,6 +20,7 @@ class Item extends Model
         'price',
         'image_path',
         'is_sold',
+        'brand_name',
     ];
 
     public function user()
@@ -45,6 +46,11 @@ class Item extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function purchases()
+    {
+        return $this->hasOne(Purchase::class);
     }
 
 }
