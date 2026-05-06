@@ -1,41 +1,43 @@
 @extends('layouts.app')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/mypage.css') }}">
+@endsection
 @section('content')
     <div class="mypage">
         <div class="mypage__profile">
             <div class="mypage__profile-left">
                 @if ($user->profile_image)
-                    <img src="{{ asset('storage/' . $user->profile_image) }}" alt="プロフィール画像" width="100">
+                    <img class="mypage__profile-image" src="{{ asset('storage/' . $user->profile_image) }}" alt="プロフィール画像">
                 @else
-                    <div style="width: 100px; height: 100px; border-radius: 50%; background: #ddd;"></div>
+                    <div class="mypage__profile-image--empty"></div>
                 @endif
-                <h2>{{ $user->name }}</h2>
+                <h2 class="mypage__name">{{ $user->name }}</h2>
             </div>
-            <div class="mypage__profile-right">
-                <a href="{{ route('profile.edit') }}">プロフィールを編集</a>
-            </div>
+            <a class="mypage__edit-button" href="{{ route('profile.edit') }}">
+                プロフィールを編集
+            </a>
         </div>
-        @if (session('message'))
-            <p>{{ session('message') }}</p>
-        @endif
-
         <div class="mypage__tabs">
-            <div class="mypage__tab">
-                <h3>出品した商品</h3>
-                <p>まだ出品した商品はありません</p>
-            </div>
-            <div class="mypage__tab">
-                <h3>購入した商品</h3>
-                @forelse ($user->purchases as $purchase)
-                    <div class="mypage__item">
-                        @if ($purchase->item && $purchase->item->image_path)
-                            <img src="{{ asset('storage/' . $purchase->item->image_path) }}" alt="商品画像" width="120">
+            <a href="{{ route('mypage', ['tab' => 'sell']) }}" class="mypage__tab {{ $tab === 'sell' ? 'active' : '' }}">
+                出品した商品
+            </a>
+            <a href="{{ route('mypage', ['tab' => 'buy']) }}" class="mypage__tab {{ $tab === 'buy' ? 'active' : '' }}">
+                購入した商品
+            </a>
+        </div>
+        <div class="mypage__items">
+            @foreach ($items as $item)
+                <div class="item-card">
+                    <a href="{{ route('items.show', $item->id) }}">
+                        @if ($item->image_path)
+                            <img class="item-card__image" src="{{ asset('storage/' . $item->image_path) }}" alt="商品画像">
+                        @else
+                            <div class="item-card__image--empty">商品画像</div>
                         @endif
-                        <p>{{ $purchase->item->name ?? '商品名未設定' }}</p>
-                    </div>
-                @empty
-                    <p>購入した商品はありません</p>
-                @endforelse
-            </div>
+                        <p class="item-card__name">{{ $item->name }}</p>
+                    </a>
+                </div>
+            @endforeach
         </div>
     </div>
 @endsection

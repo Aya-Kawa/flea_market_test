@@ -1,0 +1,94 @@
+.mypage {
+    width: 100%;
+}
+
+.mypage__profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 15%;
+}
+
+.mypage__profile-left {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.mypage__profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.mypage__profile-image--empty {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #ddd;
+}
+
+.mypage__name {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.mypage__edit-button {
+    border: 2px solid #ff5555;
+    color: #ff5555;
+    border-radius: 8px;
+    padding: 8px 24px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.mypage__tabs {
+    border-bottom: 1px solid #333;
+    padding-left: 10%;
+}
+
+.mypage__tab {
+    display: inline-block;
+    padding: 20px 40px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.mypage__tab.active {
+    color: #ff5555;
+}
+
+.mypage__items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    padding: 40px 7%;
+}
+
+.item-card a {
+    text-decoration: none;
+    color: #333;
+}
+
+.item-card__image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.item-card__image--empty {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+.item-card__name {
+    margin-top: 8px;
+    font-size: 16px;
+}
