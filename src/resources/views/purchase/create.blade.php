@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
+@section('css')
+<link rel="stylesheet" href="{{asset('css/purchase.css')}}"
+@endsection
+
 @section('content')
-  <div class="purchase-container">
+<div class="purchase-container">
     <div class="purchase-left">
 
 
@@ -31,6 +35,9 @@
               カード払い
             </option>
           </select>
+           @foreach ($errors->get('payment_method') as $massage)
+                <p class="form__error">{{ $massage }}</p>
+            @endforeach
         </form>
       </div>
 
@@ -43,10 +50,14 @@
           <p>〒{{ $purchaseAddress['postal_code'] }}</p>
           <p>{{ $purchaseAddress['address'] }}</p>
           <p>{{ $purchaseAddress['building'] }}</p>
+            @foreach ($errors->get('shipping_address') as $massage)
+                <p class="form__error">{{ $massage }}</p>
+            @endforeach
+          <input type="hidden" name="shipping_address" value="{{$purchaseAddress['postal_code']}} {{$purchaseAddress['address']}} {{$purchaseAddress['building'] ?? ''}}">
         </div>
       </div>
-  </div>
-  </div>
+    </div>
+  
 
 
 
@@ -64,9 +75,11 @@
     </table>
 
     <form action="{{ route('purchase.store', ['item' => $item->id]) }}" method="POST">
-      @csrf
-      <button type="submit">購入する</button>
-    </form>
+   @csrf
+<input type="hidden" name="payment_method" value="{{ $paymentMethod }}">
+<input type="hidden" name="shipping_address" value="{{ $purchaseAddress['postal_code'] }} {{ $purchaseAddress['address'] }} {{ $purchaseAddress['building'] ?? '' }}">
+<button type="submit">購入する</button>
+</form>
   </div>
-  </div>
+</div>
 @endsection

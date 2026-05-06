@@ -9,6 +9,8 @@ use App\Models\Purchase;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
+use App\Http\Requests\PurchaseRequest;
+
 class PurchaseController extends Controller
 {
     public function create(Item $item)
@@ -34,9 +36,11 @@ class PurchaseController extends Controller
 
 
 
-    public function store(Request $request, Item $item)
+    public function store(PurchaseRequest $request, Item $item)
     {
-        $paymentMethod = session()->get("payment_method_{$item->id}", 'コンビニ払い');
+        $validated = $request->validated();
+
+        $paymentMethod = $validated['payment_method'];
 
         $purchaseAddress = session()->get("purchase_address_{$item->id}", [
             'postal_code' => Auth::user()->postal_code,
@@ -53,9 +57,7 @@ class PurchaseController extends Controller
             $paymentTypes = ['card'];
         } elseif ($method === 'コンビニ払い') {
             $paymentTypes = ['konbini'];
-        } else {
-            $paymentTypes = ['card'];
-        }
+        } 
 
         $session = StripeSession::create([
             'mode' => 'payment',
@@ -77,7 +79,7 @@ class PurchaseController extends Controller
             'metadata' => [
                 'item_id' => $item->id,
                 'user_id' => auth()->id(),
-                'payment_method' => $request->payment_method ?? $paymentMethod,
+                'payment_method' => $paymentMethod,
                 'postal_code' => $purchaseAddress['postal_code'],
                 'address' => $purchaseAddress['address'],
                 'building' => $purchaseAddress['building'] ?? '',

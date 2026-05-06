@@ -14,31 +14,34 @@
     <header class="header">
         <div class="header__innner">
             <a href="/" class="header__logo">Coachtech</a>
-
-            @auth
-                @if(!request()->routeIs('verification.notice'))
+            @php
+                $isVerifyPage = request()->routeIs('verification.notice');
+                $isPublicItemPage = request()->routeIs('items.index', 'items.show');
+            @endphp
+            @if (!$isVerifyPage && (auth()->check() || $isPublicItemPage))
                 <form action="{{ route('items.index') }}" class="header__search" method="GET">
                     <input type="text" name="keyword" value="{{ $keyword ?? '' }}" placeholder="何をお探しですか?">
 
                     @if(request('tab') === 'mylist')
-                     <input type="hidden" name="tab" value="mylist">
+                        <input type="hidden" name="tab" value="mylist">
                     @endif
                 </form>
 
                 <nav class="header__nav">
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit">ログアウト</button>
-                    </form>
+                    @auth
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit">ログアウト</button>
+                        </form>
 
-                    <a href="{{ route('profile.edit') }}">マイページ</a>
-                    <a href="{{ route('sell.create') }}" class="sell-button">出品</a>
-
-
-
+                        <a href="{{ route('mypage') }}">マイページ</a>
+                        <a href="{{ route('sell.create') }}" class="sell-button">出品</a>
+                    @else
+                        <a href="{{ route('login') }}">ログイン</a>
+                        <a href="{{ route('sell.create') }}" class="sell-button">出品</a>
+                    @endauth
                 </nav>
-                @endif
-            @endauth
+            @endif
         </div>
     </header>
 
